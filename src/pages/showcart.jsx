@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { AiOutlineDelete } from "react-icons/ai";
+import '../index.css'
 
 
 const ShowCartPage = () => {
@@ -102,7 +104,7 @@ const ShowCartPage = () => {
                       }
                     />
                   </div>
-                  <button onClick={() => handleRemove(item.product)}>Remove</button>
+                  <li ><AiOutlineDelete  onClick={() => handleRemove(item.product)}/> </li> 
                 </div>
               </li>
             );

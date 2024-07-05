@@ -36,7 +36,7 @@ function OrderPage() {
       };
 
     
-      const response = await axios.post('http://localhost:3000/api/user/admin/order', orderData);
+      const response = await axios.post('https://furniture-cart-5.onrender.com/api/user/admin/order', orderData);
       const { razorpayOrderID, amount, currency } = response.data;
 
       
@@ -58,7 +58,7 @@ function OrderPage() {
           description: 'Purchase of furniture',
           order_id: razorpayOrderID,
           handler: async (response) => {
-            const paymentResult = await axios.post('/api/payment/success', {
+            const paymentResult = await axios.post('https://furniture-cart-5.onrender.com/api/user/verify', {
               orderCreationId: razorpayOrderID,
               razorpayPaymentId: response.razorpay_payment_id,
               razorpayOrderId: response.razorpay_order_id,
@@ -80,7 +80,7 @@ function OrderPage() {
           prefill: {
             name: 'Customer Name',
             email: 'customer@example.com',
-            contact: '9999999999',
+            contact: '7902258902',
           },
           notes: {
             address,

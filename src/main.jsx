@@ -14,7 +14,7 @@ import Topcategories from "./pages/Topcategories.jsx";
 import AboutUs from "./pages/Aboutus.jsx";
 import ContactUs from "./pages/Contactus.jsx";
 import ProductsByCategory from "./pages/productbycategoris.jsx";
-import OrderPage from "./pages/Order.jsx";
+import OrderPage from "./pages/Orderview.jsx";
 import OrderCompletePage from "./pages/ordercompletepage.jsx";
 import ShowCartPage from "./pages/showcart.jsx";
 import Manageproduct from "./Adminpages/manageproduct.jsx";
@@ -25,7 +25,9 @@ import ManageUser from "./Adminpages/manageUser.jsx";
 import Messages from "./Adminpages/customerService.jsx";
 import OrderManagement from "./Adminpages/manageOrder.jsx";
 import  UpdateOrderStatus from './Adminpages/updates.jsx';
-import ViewReturnRequests from './Adminpages/managerequist.jsx'
+import ViewReturnRequests from './Adminpages/managerequist.jsx';
+import OrderView from './pages/Orderview.jsx'
+
 
 
 
@@ -89,6 +91,10 @@ const router = createBrowserRouter([
         path:'products',
         element:<Products/>
       },
+      {
+        path:'orders/:userId',
+        element:<OrderView/>
+      }
     
     
     ],

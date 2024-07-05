@@ -37,8 +37,9 @@ const Login = () => {
         response = await axios.post('https://furniture-cart-5.onrender.com/api/user/signin', { email, password });
         if (response.status === 200) {
           console.log('User login successful!');
-          localStorage.setItem('userId', response.data.userId); 
+          localStorage.setItem('userId',response.data.userId); 
           localStorage.setItem('token',response.data.token)
+          
           navigate('/');
           return;
         } else {
