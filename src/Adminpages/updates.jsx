@@ -10,8 +10,8 @@ const UpdateOrderStatus = ({ orderId, onStatusUpdate }) => {
     setError(null);
 
     try {
-      const response = await axios.put(`http://localhost:3000/api/user/admin/updateOrderStatus/${orderId}`, { status });
-      console.log('Response from update API:', response.data); // Debugging log
+      const response = await axios.put(`https://furniture-cart-5.onrender.com/api/user/admin/updateOrderStatus/${orderId}`, { status });
+      console.log('Response from update API:', response.data); 
 
       setStatus('');
       onStatusUpdate(orderId, status);

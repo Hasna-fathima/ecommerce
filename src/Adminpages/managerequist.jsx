@@ -1,57 +1,83 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../index.css'
 
-const ViewReturnRequests= () => {
-  const [returnRequests, setReturnRequests] = useState([]);
+const ReturnRequests = () => {
+  const [returns, setReturns] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchReturnRequests = async () => {
+    const fetchReturns = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/user/admin/order/return');
-        setReturnRequests(response.data);
+        const response = await axios.get('https://furniture-cart-5.onrender.com/api/user/admin/order/return'); 
+          if (Array.isArray(response.data.returns)) {
+          setReturns(response.data.returns);
+        } else {
+          setError('Invalid response format');
+        }
       } catch (err) {
-        setError('Failed to fetch return requests');
+        setError(err.message);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchReturnRequests();
+    fetchReturns();
   }, []);
 
   if (loading) {
-    return <div className="text-center my-5">Loading...</div>;
+    return <div className="d-flex justify-content-center my-5"><div className="spinner-border" role="status"></div></div>;
   }
 
   if (error) {
-    return <div className="alert alert-danger">{error}</div>;
-  }
-
-  if (returnRequests.length === 0) {
-    return <div className="alert alert-warning">No return requests found</div>;
+    return <div className="alert alert-danger" role="alert">Error: {error}</div>;
   }
 
   return (
     <div className="container my-5">
-      <h2 className="mb-4">Return Requests</h2>
-      <div className="list-group">
-        {returnRequests.map(request => (
-          <div key={request._id} className="list-group-item mb-4">
-            <h3 className="h5">Return Request ID: {request._id}</h3>
-            <p>Status: {request.status}</p>
-            <p>Message: {request.message}</p>
-            <p>Requested By: {request.userid.details.name} ({request.userid.details.email})</p>
-            <p>Order ID: {request.orderid._id}</p>
-            <p>Product: {request.productid.details.name}</p>
-            <p>Created At: {new Date(request.createdAt).toLocaleDateString()}</p>
-            <p>Updated At: {new Date(request.updatedAt).toLocaleDateString()}</p>
-          </div>
-        ))}
+      <h2 className="heading mb-4">Return Requests</h2>
+      <div className="table-responsive">
+        <table className="table table-striped table-hover">
+          <thead className="thead">
+            <tr>
+              <th>User ID</th>
+              <th>User Name</th>
+              <th>User Email</th>
+              <th>Order ID</th>
+              <th>Product ID</th>
+              <th>Product Name</th>
+              <th>Product Price</th>
+              <th>Reason</th>
+              <th>Status</th>
+              <th>Return Date</th>
+              <th>Created At</th>
+              <th>Updated At</th>
+            </tr>
+          </thead>
+          <tbody className='tbody'>
+            {returns.map(returnRequest => (
+              <tr key={returnRequest._id}>
+                <td>{returnRequest.userid?._id}</td>
+                <td>{returnRequest.userid?.name}</td>
+                <td>{returnRequest.userid?.email}</td>
+                <td>{returnRequest.orderid}</td>
+                <td>{returnRequest.productid?._id}</td>
+                <td>{returnRequest.productid?.name}</td>
+                <td>{returnRequest.productid?.price}</td>
+                <td>{returnRequest.reason}</td>
+                <td>{returnRequest.status}</td>
+                <td>{new Date(returnRequest.returnDate).toLocaleDateString()}</td>
+                <td>{new Date(returnRequest.createdAt).toLocaleDateString()}</td>
+                <td>{new Date(returnRequest.updatedAt).toLocaleDateString()}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
 };
-export default ViewReturnRequests
+
+export default ReturnRequests;

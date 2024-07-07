@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Table, Spinner, Alert, Container, Row, Col } from 'react-bootstrap';
-import UpdateOrderStatus from './updates'; // Adjust import path as per your project structure
+import UpdateOrderStatus from './updates'; 
 import '../index.css';
 
 const OrderManagement = () => {
@@ -27,7 +27,7 @@ const OrderManagement = () => {
 
   const handleStatusUpdate = async (orderId, newStatus) => {
     try {
-      const response = await axios.put(`http://localhost:3000/api/user/admin/updateOrderStatus/${orderId}`, { status: newStatus });
+      const response = await axios.put(`https://furniture-cart-5.onrender.com/api/user/admin/updateOrderStatus/${orderId}`, { status: newStatus });
       const updatedOrder = response.data;
 
       const updatedOrders = orders.map(order => {
@@ -64,7 +64,7 @@ const OrderManagement = () => {
     <Container className="mt-5">
       <Row>
         <Col>
-          <h1 className="mb-4">Orders</h1>
+          <h1 className="heading mb-4">Orders</h1>
           {Array.isArray(orders) && orders.length === 0 ? (
             <p>No orders found.</p>
           ) : (

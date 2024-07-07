@@ -35,7 +35,7 @@ function Topcategories() {
           {categories.map(category => (
             <div key={category.id} className="col-md-4 mb-4">
               <div className="card" style={{ height: '100%' }}>
-                <Link to={`/products/${category._id}`}> {/* Ensure category._id is used */}
+                <Link to={`/products/${category._id}`}> 
                   <img src={category.image} className="card-img-top img-fluid" style={{ height: '250px', objectFit: 'cover' }} alt={category.slug} />
                 </Link>
                 <div className="card-body">

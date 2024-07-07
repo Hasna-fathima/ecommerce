@@ -6,7 +6,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
 function Ordercompletepage() {
-  const { orderId, productId } = useParams(); // Assume orderId and productId are passed as URL parameters
+  const { orderId, productId } = useParams();
   const userId = localStorage.getItem('userId');
   const [message, setMessage] = useState('');
   const [reason, setReason] = useState('');

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Spinner,  Container, } from 'react-bootstrap';
 
 const OrderPage = () => {
   const [orders, setOrders] = useState([]);
@@ -22,7 +23,7 @@ const OrderPage = () => {
       try {
         const userId= localStorage.getItem('userId');
         if (userId) {
-        const response = await axios.get(`http://localhost:3000/api/user/order/${userId}`,{
+        const response = await axios.get(`https://furniture-cart-5.onrender.com/api/user/order/${userId}`,{
           headers: {
             'Authorization': `Bearer ${userId}`
         }
@@ -76,17 +77,19 @@ const OrderPage = () => {
     }
   };
 
-  if (loading) {
-    return <div className="text-center my-5">Loading...</div>;
-  }
+  if (loading) return (
+    <Container className="text-center my-5">
+      <Spinner animation="border" role="status">
+        <span className="sr-only">Loading...</span>
+      </Spinner>
+    </Container>
+  );
 
-  if (error) {
-    return <div className="alert alert-danger">{error}</div>;
-  }
-
-  if (orders.length === 0) {
-    return <div className="alert alert-warning">No orders found for this user</div>;
-  }
+  if (error) return (
+    <Container className="text-center my-5">
+      <Alert variant="danger">Error: {error}</Alert>
+    </Container>
+  );
 
   return (
     <div className="container my-5">

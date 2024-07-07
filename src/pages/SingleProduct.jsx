@@ -29,6 +29,8 @@ const SingleProduct = () => {
         addressType: "home",
     });
 
+
+
     useEffect(() => {
         const fetchProduct = async () => {
             if (!Id) {
@@ -38,20 +40,23 @@ const SingleProduct = () => {
                 return;
             }
 
-            try {
-                const response = await axios.get(`https://furniture-cart-5.onrender.com/api/user/product/${Id}`);
-                if (response.status === 200) {
-                    setProduct(response.data);
-                } else {
-                    setError("Failed to fetch product details");
-                }
+                   try {
+                
+                        const response = await axios.get(`https://furniture-cart-5.onrender.com/api/user/product/${Id}`);
+                        if(response.status === 200){
+                    setProduct(response.data);  
+                   } else {
+                    setError("Failed to fetch product details")
+                   }
             } catch (error) {
                 console.error('Error fetching product:', error);
                 setError('Failed to fetch product details. Please try again later.');
             } finally {
                 setLoading(false);
             }
-        };
+        
+           }
+        
 
         fetchProduct();
     }, [Id]);

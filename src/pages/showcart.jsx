@@ -66,7 +66,7 @@ const ShowCartPage = () => {
 
   return (
     <div className='container mt-5'>
-      <h1 className='mb-4'>Shopping Cart</h1>
+      <p className='heading mb-4'>Shopping Cart</p>
       {cartItems.length === 0 ? (
         <div className="alert alert-info">Your cart is empty</div>
       ) : (
@@ -104,7 +104,7 @@ const ShowCartPage = () => {
                       }
                     />
                   </div>
-                  <li ><AiOutlineDelete  onClick={() => handleRemove(item.product)}/> </li> 
+                  <button onClick={() => handleRemove(item.product)}></button>
                 </div>
               </li>
             );

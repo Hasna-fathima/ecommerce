@@ -6,6 +6,7 @@ import { MdOutlineLocalShipping } from "react-icons/md";
 import { CgSupport } from "react-icons/cg";
 import { CiShoppingBasket } from "react-icons/ci";
 import { MdAssignmentReturn } from "react-icons/md";
+import { Spinner,  Container, } from 'react-bootstrap';
 
 const Products = () => {
     const [products, setProducts] = useState([]);
@@ -22,8 +23,8 @@ const Products = () => {
             const userId= localStorage.getItem('userId');
             if (userId) {
                 const response = await axios.get('https://furniture-cart-5.onrender.com/api/user/products', {
-                    headers: {
-                        'Authorization': `Bearer ${userId}`
+                   headers: {
+                     'Authorization': `Bearer ${userId}`
                     }
                 });
                 setProducts(response.data);
@@ -38,13 +39,19 @@ const Products = () => {
         }
     };
 
-    if (loading) {
-        return <p>Loading...</p>;
-    }
-
-    if (error) {
-        return <p>Error fetching products: {error}</p>;
-    }
+    if (loading) return (
+      <Container className="text-center my-5">
+        <Spinner animation="border" role="status">
+          <span className="sr-only">Loading...</span>
+        </Spinner>
+      </Container>
+    );
+  
+    if (error) return (
+      <Container className="text-center my-5">
+        <Alert variant="danger">Error: {error}</Alert>
+      </Container>
+    );
 
     return (
         <div className='container'>
