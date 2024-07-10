@@ -15,6 +15,7 @@ const SingleProduct = () => {
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [reviews,setReviews]=useState([]);
     const [showAddressForm, setShowAddressForm] = useState(false);
     const [address, setAddress] = useState({
         name: "",
@@ -45,6 +46,7 @@ const SingleProduct = () => {
                         const response = await axios.get(`https://furniture-cart-5.onrender.com/api/user/product/${Id}`);
                         if(response.status === 200){
                     setProduct(response.data);  
+                    fetchReviews(response.data._id)
                    } else {
                     setError("Failed to fetch product details")
                    }
@@ -60,7 +62,21 @@ const SingleProduct = () => {
 
         fetchProduct();
     }, [Id]);
+    const fetchReviews = async (productId) => {
+        try {
+            const response = await axios.get(`http://localhost:3000/api/user/review/${productId}`);
+            if (response.status === 200) {
+                setReviews(response.data);
+            } else {
+                setError('Failed to fetch reviews');
+            }
+        } catch (error) {
+            console.error('Error fetching reviews:', error);
+            setError('Failed to fetch reviews. Please try again later.');
+        }
+    };
     
+
 
     const handleOrder = () => {
         setShowAddressForm(true);
@@ -181,7 +197,20 @@ const SingleProduct = () => {
                         <p>&#8377;{product.price}</p>
                         <p>{product.category.name}</p>
                         <p>Quantity: {product.quantity}</p>
-                        <p>{product.review}</p>
+                        <div>
+                            <p>Reviews</p>
+                            {reviews.length === 0 ? (
+                                ""
+                            ) : (
+                                <ul>
+                                    {reviews.map((review) => (
+                                        <p key={review._id}>
+                                            {review.comment}
+                                        </p>
+                                    ))}
+                                </ul>
+                            )}
+                        </div>
                         <button onClick={handleOrder}>Buy Now</button>
                         <button onClick={handleAddToCart}>Add to Cart</button>
                     </div>

@@ -18,7 +18,7 @@ const Login = () => {
     try {
       let response;
 
-      // Attempt admin login
+      
       try {
         response = await axios.post('https://furniture-cart-5.onrender.com/api/user/admin/signin', { email, password });
         if (response.status === 200 && response.data.user && response.data.user.role === 'admin') {
@@ -32,7 +32,7 @@ const Login = () => {
         console.log('Admin login failed, trying user login');
       }
 
-      // Attempt regular user login
+      
       try {
         response = await axios.post('https://furniture-cart-5.onrender.com/api/user/signin', { email, password });
         if (response.status === 200) {

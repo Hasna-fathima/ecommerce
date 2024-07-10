@@ -12,8 +12,8 @@ const OrderManagement = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/user/admin/orders'); 
-        console.log('API Response:', response.data); // Debugging log
+        const response = await axios.get('https://furniture-cart-5.onrender.com/api/user/admin/orders'); 
+        console.log('API Response:', response.data); 
         setOrders(response.data);
       } catch (err) {
         setError(err.message);

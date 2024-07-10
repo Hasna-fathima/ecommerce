@@ -27,22 +27,19 @@ const AdminSignup = () => {
 
   const handleSubmit = async (values, { resetForm, setSubmitting }) => {
     try {
-      // Send form data to backend API
+      
       const response = await axios.post('https://furniture-cart-5.onrender.com/api/user/admin/signup', values);
 
-      // Handle successful response
-      console.log('Form submitted: ', response.data);
-      navigate('/admin/login')
 
-      // Reset form after successful submission
+      console.log('Form submitted: ', response.data);
+      navigate('/login')
       resetForm();
 
-      // Set submitting state to false after form is reset
       setSubmitting(false);
     } catch (error) {
-      // Handle error state if backend call fails
+    
       console.error('Error submitting form: ', error);
-      // You can set an error state and display an error message to the user
+  
     }
   };
 

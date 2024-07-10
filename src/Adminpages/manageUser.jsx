@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../index.css'
+import { FaRegCircleUser } from "react-icons/fa6";
 
 function ManageUser() {
   const [users, setUsers] = useState([]);
@@ -52,7 +53,7 @@ function ManageUser() {
         },
       });
 
-      // Update UI by marking the user as blocked
+      
       setUsers(users.map(user => user._id === id ? { ...user, isBlocked: true } : user));
     } catch (error) {
       console.error('Error blocking user:', error);
@@ -74,7 +75,7 @@ function ManageUser() {
         },
       });
 
-      // Update UI by marking the user as unblocked
+
       setUsers(users.map(user => user._id === id ? { ...user, isBlocked: false } : user));
     } catch (error) {
       console.error('Error unblocking user:', error);
@@ -99,6 +100,7 @@ function ManageUser() {
             <div key={user._id} className='card'>
               <div className='card-flag-container'>
                 <div className='card-info'>
+                <h3 className='user'><FaRegCircleUser/></h3>
                   <h2>{user.firstname}</h2>
                   <p>{user.lastname}</p>
                   <p>{user.email}</p>

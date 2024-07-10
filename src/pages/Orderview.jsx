@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Spinner,  Container, } from 'react-bootstrap';
+import { Spinner, Container, Modal, Button, Form } from 'react-bootstrap';
 
 const OrderPage = () => {
   const [orders, setOrders] = useState([]);
@@ -9,10 +9,13 @@ const OrderPage = () => {
   const [error, setError] = useState('');
   const [returnMessage, setReturnMessage] = useState('');
   const [selectedItem, setSelectedItem] = useState(null);
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState('');
+  const [reviewMessage, setReviewMessage] = useState('');
 
   useEffect(() => {
     const fetchOrders = async () => {
-      const userId = localStorage.getItem('userId'); 
+      const userId = localStorage.getItem('userId');
 
       if (!userId) {
         setError('User ID not found in local storage');
@@ -21,18 +24,12 @@ const OrderPage = () => {
       }
 
       try {
-        const userId= localStorage.getItem('userId');
-        if (userId) {
-        const response = await axios.get(`https://furniture-cart-5.onrender.com/api/user/order/${userId}`,{
+        const response = await axios.get(`https://furniture-cart-5.onrender.com/api/user/order/${userId}`, {
           headers: {
             'Authorization': `Bearer ${userId}`
-        }
-    });
-    setOrders(response.data);
-} else {
-    navigate('/login');
-}
-       
+          }
+        });
+        setOrders(response.data);
       } catch (err) {
         setError('Failed to fetch orders');
       } finally {
@@ -48,7 +45,7 @@ const OrderPage = () => {
   };
 
   const handleReturnSubmit = async () => {
-    const userId = localStorage.getItem('userId'); 
+    const userId = localStorage.getItem('userId');
 
     if (!userId) {
       alert('User ID not found in local storage');
@@ -74,6 +71,37 @@ const OrderPage = () => {
     } catch (err) {
       console.error('Failed to submit return request:', err);
       alert('Failed to submit return request');
+    }
+  };
+
+  const handleSubmitReview = async () => {
+    const userId = localStorage.getItem('userId');
+
+    if (!userId) {
+      alert('User ID not found in local storage');
+      return;
+    }
+
+    if (!selectedItem || !selectedItem.orderid || !selectedItem.productId) {
+      alert('Order ID or Product ID not found in selected item');
+      return;
+    }
+
+    try {
+      await axios.post(`http://localhost:3000/api/user/review`, {
+        userId: userId,
+        productId: selectedItem.productId._id,
+        rating: rating,
+        comment: comment,
+      });
+
+      setReviewMessage('Review submitted successfully');
+      setRating(0);
+      setComment('');
+      setSelectedItem(null);
+    } catch (err) {
+      console.error('Failed to submit review:', err);
+      setReviewMessage('Failed to submit review');
     }
   };
 
@@ -133,6 +161,9 @@ const OrderPage = () => {
                           >
                             Return Item
                           </button>
+                          <button onClick={() => setSelectedItem({ orderid: order, productId: item.productId })}>
+                            Add Review
+                          </button>
                         </div>
                       </div>
                     </li>
@@ -143,6 +174,59 @@ const OrderPage = () => {
           </div>
         ))}
       </div>
+
+      {selectedItem && (
+        <Modal show={selectedItem !== null} onHide={() => setSelectedItem(null)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Add Review</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form>
+              <Form.Group controlId="formRating">
+                <Form.Label>Rating</Form.Label>
+                <Form.Control
+                  type="number"
+                  min="1"
+                  max="5"
+                  value={rating}
+                  onChange={(e) => setRating(e.target.value)}
+                />
+              </Form.Group>
+              <Form.Group controlId="formComment">
+                <Form.Label>Comment</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                />
+              </Form.Group>
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setSelectedItem(null)}>
+              Close
+            </Button>
+            <Button variant="secondary" onClick={handleSubmitReview}>
+              Submit Review
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      )}
+
+      {reviewMessage && (
+        <Modal show={reviewMessage !== ''} onHide={() => setReviewMessage('')}>
+          <Modal.Header closeButton>
+            <Modal.Title>Review Submission</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>{reviewMessage}</Modal.Body>
+          <Modal.Footer>
+            <Button  onClick={() => setReviewMessage('')}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      )}
 
       {selectedItem && (
         <div className="modal fade" id="returnModal" tabIndex="-1" aria-labelledby="returnModalLabel" aria-hidden="true">
@@ -166,7 +250,7 @@ const OrderPage = () => {
               </div>
               <div className="modal-footer">
                 <button type="button"  data-bs-dismiss="modal">Close</button>
-                <button type="button"onClick={handleReturnSubmit}>Submit Return Request</button>
+                <button type="button" onClick={handleReturnSubmit}>Submit Return Request</button>
               </div>
             </div>
           </div>

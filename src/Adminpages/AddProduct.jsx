@@ -53,12 +53,18 @@ function AddProductForm() {
     formData.append('image', newProduct.image);
 
     try {
-      await axios.post('https://furniture-cart-5.onrender.com/api/user/admin/create-product', formData, {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        navigate('/login');
+        return;
+      }
+      
+      await axios.post(`https://furniture-cart-5.onrender.com/api/user/admin/create-product`, formData, {
         headers: {
           'Authorization': `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data',
         },
       });
+
       navigate('/admin/manageproducts');
     } catch (error) {
       console.error('Error adding product:', error);

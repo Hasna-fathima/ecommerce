@@ -46,25 +46,13 @@ body{
   text-decoration: none;
 }
 
-.container1{
-  border-top: 0.1rem solid brown;
-  border-right: 0.5rem solid transparent;
-  border-left: 0.5rem solid transparent;
-}
-
 .container2{
   background-image: url("/images/forms.jpg");
   background-size: cover;
   background-attachment: scroll;
 
 }
-.btn{
-  color: black;
-  background-color: rgba(37, 175, 180, 0.678);
-  border:rgba(140, 149, 155, 0.87);
-  width: 60px;
-  margin-top: 0.5rem;
-}
+
 .primary, .more, .last{
   display: flex;
   flex-direction: column;
@@ -372,6 +360,9 @@ padding: 2px;
   color:rgba(134, 83, 49, 0.9)
 }
 .card-title{
+  color:rgba(134, 83, 49, 0.9)
+}
+.ic{
   color:rgba(134, 83, 49, 0.9)
 }
 

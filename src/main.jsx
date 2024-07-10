@@ -24,9 +24,9 @@ import SingleProduct from './pages/SingleProduct.jsx'
 import ManageUser from "./Adminpages/manageUser.jsx";
 import Messages from "./Adminpages/customerService.jsx";
 import OrderManagement from "./Adminpages/manageOrder.jsx";
-import  UpdateOrderStatus from './Adminpages/updates.jsx';
 import ViewReturnRequests from './Adminpages/managerequist.jsx';
-import OrderView from './pages/Orderview.jsx'
+import OrderView from './pages/Orderview.jsx';
+import ManageCategory from './Adminpages/manageCategory.jsx'
 
 
 
@@ -142,9 +142,14 @@ const router = createBrowserRouter([
   
      },
      {
+      path:'managecategory',
+      element:<ManageCategory/>
+     },
+     {
       path:'returnview',
       element:<ViewReturnRequests/>
-     }
+     },
+
    
     ]
   },

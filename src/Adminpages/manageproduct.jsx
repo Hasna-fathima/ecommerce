@@ -41,8 +41,8 @@ function ManageProduct() {
   };
 
   const handleDelete = async (id) => {
-    const userId = localStorage.getItem('userId');
-    if (!userId) {
+    const token = localStorage.getItem('token');
+    if (!token) {
       navigate('/login');
       return;
     }
@@ -50,7 +50,7 @@ function ManageProduct() {
     try {
       await axios.delete(`https://furniture-cart-5.onrender.com/api/user/admin/productdelete/${id}`, {
         headers: {
-          'Authorization': `Bearer ${_id}`,
+          'Authorization': `Bearer ${token}`,
         },
       });
       setProducts(products.filter(product => product._id !== id));

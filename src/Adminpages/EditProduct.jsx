@@ -28,7 +28,7 @@ function EditProductForm() {
           setProduct(response.data);
           setUpdatedProduct({
             ...response.data,
-            image: null, // Initialize image as null to handle updates separately
+            image: null, 
           });
         } else {
           setError('Failed to fetch product details');
