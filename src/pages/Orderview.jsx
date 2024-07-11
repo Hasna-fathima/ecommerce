@@ -88,7 +88,7 @@ const OrderPage = () => {
     }
 
     try {
-      await axios.post(`/api/user/review`, {
+      await axios.post(`https://furniture-cart-5.onrender.com/api/user/review`, {
         userId: userId,
         productId: selectedItem.productId._id,
         rating: rating,
