@@ -82,14 +82,14 @@ const ShowCartPage = () => {
                     className='img-thumbnail mr-3'
                     src={imageUrl}
                     alt={item.name}
-                    style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                    style={{ width: '100px', height: '100px', objectFit: 'cover', padding:2 }}
                     onError={(e) => {
                       e.target.onerror = null; 
                       e.target.src = 'https://via.placeholder.com/100'; 
                     }}
                   />
                   <div>
-                    <h5>{item.name}</h5>
+                    <h5>{item.name}</h5><br/>
                     <p>Price: &#8377;{item.price}</p>
                   </div>
                 </div>

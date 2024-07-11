@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import furniture1 from '../../images/furniture1.jpg'
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import { useNavigate } from 'react-router-dom';
-import { RiAddLargeFill } from 'react-icons/ri';
+
 
 const AdminHeader = () => {
   const navigate=useNavigate()
@@ -46,13 +46,15 @@ const AdminHeader = () => {
               <Link className="nav-link text-warning-emphasis fs-8" to="/admin/messages">CustomerSupport</Link>
               </li>
               <li className="nav-item">
-              <Link className="nav-link text-warning-emphasis fs-8" onClick={handletoken} to="/admin/home">Logout</Link>
+              <Link className="nav-link text-warning-emphasis fs-8"  to="/admin/managecategory">category</Link>
               </li>
+              
               <li className="nav-item">
               <Link className="nav-link text-warning-emphasis fs-8"  to="/admin/signup">Addadmin</Link>
               </li>
+              
               <li className="nav-item">
-              <Link className="nav-link text-warning-emphasis fs-8"  to="/admin/managecategory">category</Link>
+              <Link className="nav-link text-warning-emphasis fs-8" onClick={handletoken} to="/admin/home">Logout</Link>
               </li>
               
             </ul>

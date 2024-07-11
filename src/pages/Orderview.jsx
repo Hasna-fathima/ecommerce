@@ -124,8 +124,8 @@ const OrderPage = () => {
       <div className="list-group">
         {orders.map(order => (
           <div key={order._id} className="list-group-item mb-4">
-            <p className="h5">Order ID: {order._id}</p>
-            <p>Total Amount: ${order.totalAmount}</p>
+            <p>Order ID: {order._id}</p>
+            <p>Total Amount: &#8377;{order.totalAmount}</p>
             <p>Order Status:</p>
             <ul className="list-unstyled">
               {order.orderStatus.map((status, index) => (

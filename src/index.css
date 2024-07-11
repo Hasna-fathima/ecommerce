@@ -186,6 +186,7 @@ overflow: hidden;
 height: 300px;
 }
 
+
 .imagecontainer img {
 max-width: 130%;
 height: 100%;
@@ -362,8 +363,13 @@ padding: 2px;
 .card-title{
   color:rgba(134, 83, 49, 0.9)
 }
-.ic{
-  color:rgba(134, 83, 49, 0.9)
+.form-control{
+  border: none;
+  padding: 1rem;
 }
+.user{
+  padding-top: 1rem;
+}
+
 
 
