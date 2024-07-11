@@ -221,7 +221,7 @@ const OrderPage = () => {
           </Modal.Header>
           <Modal.Body>{reviewMessage}</Modal.Body>
           <Modal.Footer>
-            <Button  onClick={() => setReviewMessage('')}>
+            <Button variant="secondary"  onClick={() => setReviewMessage('')}>
               Close
             </Button>
           </Modal.Footer>
