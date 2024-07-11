@@ -41,10 +41,11 @@
     color: #fff;
     cursor: pointer;
     align-items: center; 
+    justify-content: center;
   }
   
   button:hover {
-    background-color: rgb(230, 178, 111);
+    background-color: rgb(216, 163, 94);
   }
   h3{
 
