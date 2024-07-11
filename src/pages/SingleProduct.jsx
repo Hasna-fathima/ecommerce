@@ -64,7 +64,7 @@ const SingleProduct = () => {
     }, [Id]);
     const fetchReviews = async (productId) => {
         try {
-            const response = await axios.get(`http://localhost:3000/api/user/review/${productId}`);
+            const response = await axios.get(`https://furniture-cart-5.onrender.com/api/user/review/${productId}`);
             if (response.status === 200) {
                 setReviews(response.data);
             } else {

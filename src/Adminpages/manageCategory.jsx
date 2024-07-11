@@ -13,7 +13,7 @@ const ManageCategory = () => {
     formData.append('image', image);
 
     try {
-      const response = await axios.post('http://localhost:3000/api/user/admin/addCate', formData, {
+      const response = await axios.post('https://furniture-cart-5.onrender.com/api/user/admin/addCate', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }

@@ -73,8 +73,8 @@ const ShowCartPage = () => {
         <ul className='list-group'>
           {cartItems.map(item => {
             const imageUrl = `https://res.cloudinary.com/dvhply5kh/image/upload/${item.imagePublicId}`;
-            console.log('Image URL:', imageUrl);  // Log to verify the image URL
-            console.log('Cart Item:', item);  // Log to verify each item data
+            console.log('Image URL:', imageUrl); 
+            console.log('Cart Item:', item);  
             return (
               <li key={item.product} className='list-group-item d-flex justify-content-between align-items-center'>
                 <div className="d-flex align-items-center">
@@ -85,7 +85,7 @@ const ShowCartPage = () => {
                     style={{ width: '100px', height: '100px', objectFit: 'cover' }}
                     onError={(e) => {
                       e.target.onerror = null; 
-                      e.target.src = 'https://via.placeholder.com/100'; // Fallback image
+                      e.target.src = 'https://via.placeholder.com/100'; 
                     }}
                   />
                   <div>
@@ -104,7 +104,7 @@ const ShowCartPage = () => {
                       }
                     />
                   </div>
-                  <button onClick={() => handleRemove(item.product)}></button>
+                  <p className='delete-icon'><AiOutlineDelete onClick={() => handleRemove(item.product)}/></p>
                 </div>
               </li>
             );
