@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineDelete } from "react-icons/ai";
 import '../index.css'
+import { BiPurchaseTag } from "react-icons/bi";
 
 
 const ShowCartPage = () => {
@@ -105,6 +106,8 @@ const ShowCartPage = () => {
                     />
                   </div>
                   <p className='delete-icon'><AiOutlineDelete onClick={() => handleRemove(item.product)}/></p>
+                  <p className='buy-icon'> <BiPurchaseTag onClick={() => navigate(`/singleproduct/${product._id}`)}/></p>
+                  
                 </div>
               </li>
             );

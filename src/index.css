@@ -52,6 +52,10 @@ body{
   background-attachment: scroll;
 
 }
+.bg-brown{
+  color:rgba(134, 83, 49, 0.637); 
+  padding-left: 1 rem;
+}
 
 .primary, .more, .last{
   display: flex;
