@@ -106,7 +106,7 @@ const ShowCartPage = () => {
                     />
                   </div>
                   <p className='delete-icon'><AiOutlineDelete onClick={() => handleRemove(item.product)}/></p>
-                  <p className='buy-icon'> <BiPurchaseTag onClick={() => navigate(`/singleproduct/${product._id}`)}/></p>
+                  <p className='buy-icon'> <BiPurchaseTag onClick={() => navigate(`/singleproduct/${item.product._id}`)}/></p>
                   
                 </div>
               </li>
