@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineDelete } from "react-icons/ai";
-import '../index.css'
+import '../index.css';
 import { BiPurchaseTag } from "react-icons/bi";
-
 
 const ShowCartPage = () => {
   const navigate = useNavigate();
@@ -18,7 +17,10 @@ const ShowCartPage = () => {
         const response = await axios.get(`https://furniture-cart-5.onrender.com/api/user/cart/${userId}`);
         if (response.data) {
           console.log('Cart Data:', response.data);  
-          response.data.cartItems.forEach(item=>{console.log(`cartItems`,item);console.log(`image publicId`,item.imagePublicId)})
+          response.data.cartItems.forEach(item => {
+            console.log('cartItems', item);
+            console.log('image publicId', item.imagePublicId);
+          });
           setCartItems(response.data.cartItems);
           setCartId(response.data.cartId);
         } else {
@@ -83,7 +85,7 @@ const ShowCartPage = () => {
                     className='img-thumbnail mr-3'
                     src={imageUrl}
                     alt={item.name}
-                    style={{ width: '100px', height: '100px', objectFit: 'cover', padding:2 }}
+                    style={{ width: '100px', height: '100px', objectFit: 'cover', padding: 2 }}
                     onError={(e) => {
                       e.target.onerror = null; 
                       e.target.src = 'https://via.placeholder.com/100'; 
@@ -107,7 +109,6 @@ const ShowCartPage = () => {
                   </div>
                   <p className='delete-icon'><AiOutlineDelete onClick={() => handleRemove(item.product)}/></p>
                   <p className='buy-icon'> <BiPurchaseTag onClick={() => navigate(`/singleproduct/${item.product._id}`)}/></p>
-                  
                 </div>
               </li>
             );

@@ -53,7 +53,7 @@ function ContactUs() {
             <p>We're here for you every step of the way. Whether you have questions, need order assistance, or want to share feedback, our friendly customer support team is ready to assist. Our team is here to help! Reach out to us via:</p>
             <ul className='connect list-unstyled'>
               <li className='d-flex align-items-center p-2 mb-2'><TfiEmail /><p className='ic icon ml-2 mb-0'>Mail<br />hf765729@gmail.com</p></li>
-              <li className='d-flex align-items-center p-2 mb-2'><FaPhoneVolume /><p className='ic icon ml-2 mb-0'>Phone<br />+91 9400565047</p></li>
+              <li className='d-flex align-items-center p-2 mb-2'><FaPhoneVolume /><p className='ic icon ml-2 mb-0'>Phone<br />+91 9752087532</p></li>
               <li className='d-flex align-items-center p-2 mb-2'><FaFax /><p className='ic icon ml-2 mb-0'>Fax</p></li>
               <li className='d-flex align-items-center p-2'><PiBuildingOfficeDuotone /><p className='ic icon ml-2 mb-0'>Office<br />5678 Seltice Way, Coeur D'Alene</p></li>
             </ul>

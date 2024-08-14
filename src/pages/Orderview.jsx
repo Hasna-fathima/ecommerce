@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Spinner, Container, Modal, Button, Form } from 'react-bootstrap';
+import { Spinner, Container, Modal, Button, Form, Alert } from 'react-bootstrap';
 
 const OrderPage = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [returnMessage, setReturnMessage] = useState('');
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedItemForReturn, setSelectedItemForReturn] = useState(null);
+  const [selectedItemForReview, setSelectedItemForReview] = useState(null);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
   const [reviewMessage, setReviewMessage] = useState('');
@@ -41,7 +42,7 @@ const OrderPage = () => {
   }, []);
 
   const handleReturnClick = (item) => {
-    setSelectedItem(item);
+    setSelectedItemForReturn(item);
   };
 
   const handleReturnSubmit = async () => {
@@ -52,7 +53,7 @@ const OrderPage = () => {
       return;
     }
 
-    if (!selectedItem || !selectedItem.orderid || !selectedItem.productId) {
+    if (!selectedItemForReturn || !selectedItemForReturn.orderid || !selectedItemForReturn.productId) {
       alert('Order ID or Product ID not found in selected item');
       return;
     }
@@ -60,18 +61,22 @@ const OrderPage = () => {
     try {
       await axios.post(`https://furniture-cart-5.onrender.com/api/user/return`, {
         userid: userId,
-        orderid: selectedItem.orderid._id,
-        productid: selectedItem.productId._id,
+        orderid: selectedItemForReturn.orderid._id,
+        productid: selectedItemForReturn.productId._id,
         message: returnMessage,
       });
 
       alert('Return request submitted successfully');
       setReturnMessage('');
-      setSelectedItem(null);
+      setSelectedItemForReturn(null);
     } catch (err) {
       console.error('Failed to submit return request:', err);
       alert('Failed to submit return request');
     }
+  };
+
+  const handleReviewClick = (item) => {
+    setSelectedItemForReview(item);
   };
 
   const handleSubmitReview = async () => {
@@ -82,7 +87,7 @@ const OrderPage = () => {
       return;
     }
 
-    if (!selectedItem || !selectedItem.orderid || !selectedItem.productId) {
+    if (!selectedItemForReview || !selectedItemForReview.orderid || !selectedItemForReview.productId) {
       alert('Order ID or Product ID not found in selected item');
       return;
     }
@@ -90,7 +95,7 @@ const OrderPage = () => {
     try {
       await axios.post(`https://furniture-cart-5.onrender.com/api/user/review`, {
         userId: userId,
-        productId: selectedItem.productId._id,
+        productId: selectedItemForReview.productId._id,
         rating: rating,
         comment: comment,
       });
@@ -98,7 +103,7 @@ const OrderPage = () => {
       setReviewMessage('Review submitted successfully');
       setRating(0);
       setComment('');
-      setSelectedItem(null);
+      setSelectedItemForReview(null);
     } catch (err) {
       console.error('Failed to submit review:', err);
       setReviewMessage('Failed to submit review');
@@ -126,14 +131,7 @@ const OrderPage = () => {
           <div key={order._id} className="list-group-item mb-4">
             <p>Order ID: {order._id}</p>
             <p>Total Amount: &#8377;{order.totalAmount}</p>
-            <p>Order Status:</p>
-            <ul className="list-unstyled">
-              {order.orderStatus.map((status, index) => (
-                <li key={index}>
-                  {status.type} - {status.isCompleted ? 'Completed' : 'Pending'} on {new Date(status.date).toLocaleDateString()}
-                </li>
-              ))}
-            </ul>
+            <p>Order Status: {order.orderStatus[order.orderStatus.length - 1].type}</p>
             {order.items.length === 0 ? (
               <p className="alert alert-info">You have not ordered anything yet</p>
             ) : (
@@ -161,7 +159,7 @@ const OrderPage = () => {
                           >
                             Return Item
                           </button>
-                          <button onClick={() => setSelectedItem({ orderid: order, productId: item.productId })}>
+                          <button onClick={() => handleReviewClick({ orderid: order, productId: item.productId })}>
                             Add Review
                           </button>
                         </div>
@@ -175,8 +173,8 @@ const OrderPage = () => {
         ))}
       </div>
 
-      {selectedItem && (
-        <Modal show={selectedItem !== null} onHide={() => setSelectedItem(null)}>
+      {selectedItemForReview && (
+        <Modal show={selectedItemForReview !== null} onHide={() => setSelectedItemForReview(null)}>
           <Modal.Header closeButton>
             <Modal.Title>Add Review</Modal.Title>
           </Modal.Header>
@@ -204,7 +202,7 @@ const OrderPage = () => {
             </Form>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={() => setSelectedItem(null)}>
+            <Button variant="secondary" onClick={() => setSelectedItemForReview(null)}>
               Close
             </Button>
             <Button variant="secondary" onClick={handleSubmitReview}>
@@ -228,7 +226,7 @@ const OrderPage = () => {
         </Modal>
       )}
 
-      {selectedItem && (
+      {selectedItemForReturn && (
         <div className="modal fade" id="returnModal" tabIndex="-1" aria-labelledby="returnModalLabel" aria-hidden="true">
           <div className="modal-dialog">
             <div className="modal-content">
@@ -250,7 +248,7 @@ const OrderPage = () => {
               </div>
               <div className="modal-footer">
                 <button type="button"  data-bs-dismiss="modal">Close</button>
-                <button type="button" onClick={handleReturnSubmit}>Submit Return Request</button>
+                <button type="button"  onClick={handleReturnSubmit}>Submit Return Request</button>
               </div>
             </div>
           </div>
